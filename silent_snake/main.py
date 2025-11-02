@@ -137,7 +137,7 @@ def scrape(url:URL, domain:Domain, media_li:List[Link]) -> tuple[dict[str, Any],
 
     return page_data, links
 
-def main():   
+async def main():   
     ### arg input handling ###
     parser = argparse.ArgumentParser(description="Silent Snake - A fast and reliable web scraper for gathering server and technology details along with almost all of inside links.",epilog="Example usage: python silent_snake/main.py -u example.com -o n ")
     parser.add_argument('-u', '--url', type=str, help='Target URL to scrape (http/https is optional, default = https)')
@@ -191,10 +191,13 @@ def main():
     
 
     ### Get and print details about the server and technologies used ###
-    server_details = server.Server(get_domain(start_url).replace("https://","").replace("http://",""))
-    print(server_details)
-    print(techs.UiFrameworks(requests.get(start_url, headers={'User-Agent': UserAgents["1"]})))
+    server_obj = server.Server(host=get_domain(start_url).replace("https://","").replace("http://",""))
+    ui_frameworks_obj = techs.UiFrameworks()
     
+    await asyncio.gather(server_obj.fetch_details(), ui_frameworks_obj.detect(url=start_url))
+
+    print(server_obj)
+    print(ui_frameworks_obj)
 
     domain = get_domain(start_url)
     visited = []
@@ -230,4 +233,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

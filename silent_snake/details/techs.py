@@ -1,21 +1,19 @@
 import bs4
-from requests import Response
 import re
-
+import aiohttp
 class UiFrameworks:
 
     """UI Frameworks Tech Details."""
 
-    def __init__(self, data: Response):
-        self.data = data
+    def __init__(self):
+        self.data = None
         self.framework = set()
-        self.__detect()
 
     # Supported UI Frameworks Detection ["Bootstrap", "Tailwind CSS", "Animate.css"]
 
     def __bootstrap(self) -> None:
         
-        soup = bs4.BeautifulSoup(self.data.text, 'html.parser')
+        soup = bs4.BeautifulSoup(self.data, 'html.parser')
         
         links = soup.find("head").find_all("link", href=True)
         
@@ -34,7 +32,7 @@ class UiFrameworks:
         bootstrap_classes = ["row", "col"]
         
         for cls in bootstrap_classes:
-            if f"class=\"{cls}" in self.data.text.lower():  # crude but works
+            if f"class=\"{cls}" in self.data.lower():  # crude but works
                 self.framework.add("Bootstrap")
                 return
             
@@ -42,7 +40,7 @@ class UiFrameworks:
         
         classes = []
 
-        soup = bs4.BeautifulSoup(self.data.text, 'html.parser')
+        soup = bs4.BeautifulSoup(self.data, 'html.parser')
 
         for tag in soup.find("body").find_all(class_=True):
             classes.extend(tag['class'])
@@ -65,7 +63,7 @@ class UiFrameworks:
                     return  
                 
     def __animate(self) -> None:
-        soup = bs4.BeautifulSoup(self.data.text, 'html.parser')
+        soup = bs4.BeautifulSoup(self.data, 'html.parser')
         
         links = soup.find("head").find_all("link", href=True, rel="stylesheet")
 
@@ -81,7 +79,11 @@ class UiFrameworks:
                 self.framework.add("Animate.css")
                 return
         
-    def __detect(self) -> None:
+    async def detect(self,url) -> None:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as resp:
+                self.data = await resp.text()
+
         self.__bootstrap()
     
         if "Bootstrap" not in self.framework:
