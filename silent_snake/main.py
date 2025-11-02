@@ -141,7 +141,7 @@ async def main():
     ### arg input handling ###
     parser = argparse.ArgumentParser(description="Silent Snake - A fast and reliable web scraper for gathering server and technology details along with almost all of inside links.",epilog="Example usage: python silent_snake/main.py -u example.com -o n ")
     parser.add_argument('-u', '--url', type=str, help='Target URL to scrape (http/https is optional, default = https)')
-    parser.add_argument('-o', '--output', type=str, choices=['Y', 'n'], default='Y', help='Do you want extra data output? (Y/n)')
+    parser.add_argument('-o', '--output', type=str, choices=['Y', 'n', 'y'], default='Y', help='Do you want extra data output? (Y/n)')
     args = parser.parse_args()
     if args.url:
         input_url = args.url
