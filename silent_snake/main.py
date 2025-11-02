@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-import csv
 from urllib.parse import parse_qs, urlparse, urljoin
 import re
 from typing import Any,List
