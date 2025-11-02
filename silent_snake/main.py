@@ -7,6 +7,7 @@ from typing import Any,List
 import signal
 from ssl import SSLCertVerificationError
 from details import server, techs
+import argparse
 
 type URL = str
 type Domain = str
@@ -137,16 +138,23 @@ def scrape(url:URL, domain:Domain, media_li:List[Link]) -> tuple[dict[str, Any],
     return page_data, links
 
 def main():   
-
-    input_url = input("Enter the URL(http/https is optional , default = https): ")
+    ### arg input handling ###
+    parser = argparse.ArgumentParser(description="Silent Snake - A fast and reliable web scraper for gathering server and technology details along with almost all of inside links.",epilog="Example usage: python silent_snake/main.py -u example.com -o n ")
+    parser.add_argument('-u', '--url', type=str, help='Target URL to scrape (http/https is optional, default = https)')
+    parser.add_argument('-o', '--output', type=str, choices=['Y', 'n'], default='Y', help='Do you want extra data output? (Y/n)')
+    args = parser.parse_args()
+    if args.url:
+        input_url = args.url
+        output = args.output.lower()
     
+    ### Interactive input handling ###
+    else:
+        input_url = input("Enter the URL(http/https is optional , default = https): ")
+        output = input("do you want extra data output?(Y/n) ").lower()
+
     if input_url == "":
-        print("???")
-        exit(0)
-
-    output = input("do you want data output?(Y/n) ").lower()
-
-    
+            print("???")
+            exit(0)
     start_url = check_url(input_url)
 
     media = []
