@@ -7,6 +7,7 @@ import signal
 from ssl import SSLCertVerificationError
 from details import server, techs
 import argparse
+import asyncio
 
 type URL = str
 type Domain = str
