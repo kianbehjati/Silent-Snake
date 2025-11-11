@@ -5,7 +5,7 @@ class TestMainScript(unittest.TestCase):
 
     def test_check_url(self):
         # Test with URL missing scheme
-        self.assertEqual(main.check_url("example.com"), "https://example.com")
+        self.assertEqual(main.check_url("example.com/"), "https://example.com")
         # Test with URL having http scheme
         self.assertEqual(main.check_url("http://example.com"), "http://example.com")
         # Test with URL having https scheme
