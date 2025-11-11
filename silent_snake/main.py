@@ -70,7 +70,12 @@ def is_page(url:URL, extra_patterns: list[str] = None) -> bool:
 
     return False
 
-
+def shortify(str):
+        try:
+            return str[:25] + "..."
+        except:
+            return str + "..."
+        
 def scrape(url:URL, domain:Domain, media_li:List[Link]) -> tuple[dict[str, Any], list] | None:
     '''
     page_data contains 
@@ -182,11 +187,7 @@ async def main():
     signal.signal(signal.SIGINT, exit_gracefully)
 
     
-    def shortify(str):
-        try:
-            return str[:25] + "..."
-        except:
-            return str + "..."
+
     
     
 
