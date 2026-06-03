@@ -1,5 +1,5 @@
 # This is silentSnake
-![Static Badge](https://img.shields.io/badge/License-Apache_2-red?link=https%3A%2F%2Fgithub.com%2Fkianbehjati%2Fdjit%2Ftree%2Fmain%23Apache-2.0-1-ov-file)
+![Static Badge](https://img.shields.io/badge/License-Apache_2-red)
 
 scraping tool for you to see from top to buttom of a WebApp
 
