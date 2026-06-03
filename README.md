@@ -1,5 +1,7 @@
 # This is silentSnake
 ![Static Badge](https://img.shields.io/badge/License-Apache_2-red)
+![Static Badge](https://img.shields.io/badge/build-passing-green)
+![Static Badge](https://img.shields.io/badge/python-3.12-blue)
 
 scraping tool for you to see from top to buttom of a WebApp
 
